@@ -36,11 +36,12 @@ class LuckyController extends Controller{
       for ($i = 0; $i < $count; $i++){
         $numbers[] = rand(0,100);
       }
-    $responseText = "<html><body>Lucky numbers: ";
-    for ($i = 0; $i < $count; $i++){
-      $responseText = $responseText.$numbers[$i]." ";
-    }
-    $responseText = $responseText."</body></html>";
-    return new Response($responseText);
+
+    $html = $this -> renderView(
+      "test/number.html.twig",
+      array("numberList" => $numbers)
+    );
+
+    return new Response($html);
   }
 }

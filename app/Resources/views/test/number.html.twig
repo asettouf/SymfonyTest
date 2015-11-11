@@ -2,5 +2,8 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Lucky Numbers: {{ luckyNumberList }}</h1>
+  <h1>Lucky Numbers </h1>
+  {% for number in numberList %}
+    <li>Lucky number {{loop.index}}: {{ number }}</li>
+  {% endfor %}
 {% endblock %}
