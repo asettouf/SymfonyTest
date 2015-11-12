@@ -4,16 +4,20 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class LuckyController extends Controller{
 
   /**
-   * @Route("/test/number")
+   * @Route("/test/numberError")
    */
    public function action(){
      $number = rand(0,100);
 
-     return new Response('<html><body>Lucky number: '.$number.'</body></html>');
+     throw new \Exception("Wrong page!");
+    // throw $this -> createNotFoundException("Not exist");
+
    }
 
    /**
@@ -24,12 +28,11 @@ class LuckyController extends Controller{
         "lucky number" => rand(0,100)
       );
 
-
       return new JsonResponse($number);
     }
 
     /**
-     * @Route("/test/number/{count}")
+     * @Route("/test/number/{count}", defaults={"count" = 3})
      */
     public function numberAction($count){
       $number = array();
@@ -43,5 +46,16 @@ class LuckyController extends Controller{
     );
 
     return new Response($html);
+  }
+
+  /**
+   * @Route("/test/hello")
+   * @Method("GET")
+   */
+  public function hello(){
+    $name = $this -> getRequest() -> get("name");
+  //  $name = $req -> get('eee');
+    $name = $name ? $name: "Toto";
+    return new Response("<html><body>Hello ".$name." </body></html>");
   }
 }
